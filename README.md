@@ -12,7 +12,7 @@ Require module from a given path
 ## Installation
 
 ```sh
-npm install --save lodash @lykmapipo/include
+npm install --save @lykmapipo/include
 ```
 
 ## Usage
