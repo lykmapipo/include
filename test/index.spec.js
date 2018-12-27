@@ -11,6 +11,7 @@ const {
   include,
   includeFrom,
   includeFromDirname,
+  includeFromParent,
   includeFromCwd
 } = require(path.join(__dirname, '..'));
 
@@ -105,9 +106,59 @@ describe('includeFromDirname', () => {
     expect(a.b).to.be.equal(1);
   });
 
+  it('should be able to import', () => {
+    const a = include('@dirname/a');
+    expect(a).to.exist;
+    expect(a).to.be.an('object');
+    expect(a.b).to.be.equal(1);
+  });
+
   it('should throw if not exist', () => {
     expect(() => {
       includeFromDirname('x');
+    }).to.throw(/Cannot find module/);
+  });
+
+  it('should throw if not exist', () => {
+    expect(() => {
+      include('@dirname/x');
+    }).to.throw(/Cannot find module/);
+  });
+
+});
+
+
+describe('includeFromParent', () => {
+
+  it('should export a factory', () => {
+    expect(includeFromParent).to.exist;
+    expect(includeFromParent).to.be.a('function');
+    expect(includeFromParent.name).to.be.equal('includeFromParent');
+  });
+
+  it('should be able to import', () => {
+    const a = includeFromParent();
+    expect(a).to.exist;
+    expect(a).to.be.a('function');
+    expect(a.include).to.exist;
+  });
+
+  it('should be able to import', () => {
+    const a = include('@parent');
+    expect(a).to.exist;
+    expect(a).to.be.a('function');
+    expect(a.include).to.exist;
+  });
+
+  it('should throw if not exist', () => {
+    expect(() => {
+      includeFromParent('x');
+    }).to.throw(/Cannot find module/);
+  });
+
+  it('should throw if not exist', () => {
+    expect(() => {
+      include('@parent/x');
     }).to.throw(/Cannot find module/);
   });
 

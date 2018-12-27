@@ -7,6 +7,22 @@ const _ = require('lodash');
 
 
 /**
+ * @function dirname
+ * @name dirname
+ * @description obtain __dirname of the requiring module
+ * @return {String} __dirname of the requiring module
+ * @private
+ */
+function dirname() {
+  // Prevent caching of this module so module.parent is always accurate
+  delete require.cache[__filename];
+  const parentFile = module.parent.filename;
+  const parentDir = path.dirname(parentFile);
+  return parentDir;
+}
+
+
+/**
  * @name include
  * @module include
  * @description Require module from a given path
@@ -27,12 +43,24 @@ const _ = require('lodash');
 function include(...modulePath) {
   const _modulePath = _.compact([...modulePath]);
   let _path = path.join(..._modulePath);
-  // handle @cwd
-  if (_.startsWith(_path, '@cwd')) {
-    _path = _.replace(_path, '@cwd', process.cwd());
-  }
-  // handle @dirname
-  // handle @parent
+  // handle @cwd shortcut
+  _path = (
+    _.startsWith(_path, '@cwd') ?
+    _.replace(_path, '@cwd', process.cwd()) :
+    _path
+  );
+  // handle @dirname shortcut
+  _path = (
+    _.startsWith(_path, '@dirname') ?
+    _.replace(_path, '@dirname', dirname()) :
+    _path
+  );
+  // handle @parent shortcut
+  _path = (
+    _.startsWith(_path, '@parent') ?
+    _.replace(_path, '@parent', path.join(dirname(), '..')) :
+    _path
+  );
   const _import = require(_path);
   return _import;
 }
@@ -87,10 +115,31 @@ function includeFrom(...basePath) {
  *
  */
 function includeFromDirname(...modulePath) {
-  // Prevent caching of this module so module.parent is always accurate
-  delete require.cache[__filename];
-  const parentFile = module.parent.filename;
-  const parentDir = path.dirname(parentFile);
+  const parentDir = dirname();
+  return includeFrom(parentDir)(...modulePath);
+}
+
+
+/**
+ * @name includeFromParent
+ * @module includeFromParent
+ * @description Create a shortcut to require module from parent module directory
+ * @param {...String} modulePath Path to search for a module
+ * @return {Object|Error} found module or throw error
+ * @see {@link https://nodejs.org/api/modules.html#modules_dirname}
+ * @author lally elias <lallyelias87@gmail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.1.0
+ * @public
+ * @example
+ * const { includeFromParent } = require('@lykmapipo/include');
+ *
+ * const User = includeFromParent('user');
+ *
+ */
+function includeFromParent(...modulePath) {
+  const parentDir = path.join(dirname(), '..');
   return includeFrom(parentDir)(...modulePath);
 }
 
@@ -122,6 +171,7 @@ function includeFromCwd(...modulePath) {
 include.include = include;
 include.includeFrom = includeFrom;
 include.includeFromDirname = includeFromDirname;
+include.includeFromParent = includeFromParent;
 include.includeFromCwd = includeFromCwd;
 
 

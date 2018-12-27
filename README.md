@@ -22,6 +22,7 @@ const {
   include,
   includeFrom,
   includeFromDirname,
+  includeFromParent,
   includeFromCwd
 } = require('@lykmapipo/include');
 
@@ -36,6 +37,10 @@ const includeModel = includeFrom('models');
 const User = includeModel('user');
 
 const User = includeFromDirname('user');
+const User = include('@dirname/user');
+
+const User = includeFromParent('user');
+const User = include('@parent/user');
 
 const User = includeFromCwd('user');
 const User = include('@cwd/user');

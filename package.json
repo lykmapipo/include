@@ -15,7 +15,10 @@
     "require",
     "import",
     "include",
-    "use"
+    "use",
+    "@cwd",
+    "@dirname",
+    "@parent"
   ],
   "contributors": [
     {
