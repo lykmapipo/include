@@ -38,6 +38,7 @@ const User = includeModel('user');
 const User = includeFromDirname('user');
 
 const User = includeFromCwd('user');
+const User = include('@cwd/user');
 
 ...
 

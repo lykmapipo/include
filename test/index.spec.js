@@ -137,6 +137,13 @@ describe('includeFromCwd', () => {
   });
 
   it('should be able to import', () => {
+    const a = include('@cwd/test/fixtures/a');
+    expect(a).to.exist;
+    expect(a).to.be.an('object');
+    expect(a.b).to.be.equal(1);
+  });
+
+  it('should be able to import', () => {
     const a = includeFromCwd('test', 'a');
     expect(a).to.exist;
     expect(a).to.be.an('object');
@@ -145,6 +152,13 @@ describe('includeFromCwd', () => {
 
   it('should be able to import', () => {
     const a = includeFromCwd('test/a');
+    expect(a).to.exist;
+    expect(a).to.be.an('object');
+    expect(a.b).to.be.equal(1);
+  });
+
+  it('should be able to import', () => {
+    const a = include('@cwd/test/a');
     expect(a).to.exist;
     expect(a).to.be.an('object');
     expect(a.b).to.be.equal(1);
@@ -165,6 +179,12 @@ describe('includeFromCwd', () => {
   it('should throw if not exist', () => {
     expect(() => {
       includeFromCwd('test/x');
+    }).to.throw(/Cannot find module/);
+  });
+
+  it('should throw if not exist', () => {
+    expect(() => {
+      include('@cwd/test/x');
     }).to.throw(/Cannot find module/);
   });
 

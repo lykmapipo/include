@@ -26,7 +26,13 @@ const _ = require('lodash');
  */
 function include(...modulePath) {
   const _modulePath = _.compact([...modulePath]);
-  const _path = path.join(..._modulePath);
+  let _path = path.join(..._modulePath);
+  // handle @cwd
+  if (_.startsWith(_path, '@cwd')) {
+    _path = _.replace(_path, '@cwd', process.cwd());
+  }
+  // handle @dirname
+  // handle @parent
   const _import = require(_path);
   return _import;
 }
