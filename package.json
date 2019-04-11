@@ -35,12 +35,12 @@
   "homepage": "https://github.com/lykmapipo/include",
   "devDependencies": {
     "chai": "^4.2.0",
-    "grunt": "^1.0.3",
-    "grunt-contrib-jshint": "^2.0.0",
+    "grunt": "^1.0.4",
+    "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-mocha-test": "^0.13.3",
     "jshint-stylish": "^2.2.1",
-    "mocha": "^5.2.0"
+    "mocha": "^6.1.2"
   },
   "dependencies": {
     "lodash": ">=4.17.11"
