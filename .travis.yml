@@ -3,3 +3,4 @@ node_js:
  - "8.3.0"
 before_script:
  - npm install -g grunt-cli
+ - commitlint-travis
