@@ -1,6 +1,6 @@
 {
   "name": "@lykmapipo/include",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Require module from a given path",
   "main": "index.js",
   "scripts": {
