@@ -41,7 +41,7 @@
     "grunt-mocha-test": "^0.13.3",
     "handlebars": "^4.4.3",
     "jshint-stylish": "^2.2.1",
-    "mocha": "^6.2.1"
+    "mocha": "^10.2.0"
   },
   "dependencies": {
     "lodash": ">=4.17.15"
